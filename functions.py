@@ -22,6 +22,10 @@ def read_sausage(filename, sequence_length):
             sausage_data.append(line)
             valid_sequences += 1
 
-    print(f"Valid:{valid_sequences}/{read_sequences} ({round((read_sequences / valid_sequences) / 100, 3)}%)")
+    print(
+        f"Valid Sequences: {valid_sequences}/{read_sequences} ({round((read_sequences / valid_sequences) / 100, 3)}%)")
+    print("Example Sequence:", sausage_data[0])
+    print("-------------------------------------")
     return sausage_data
+
 
