@@ -53,7 +53,7 @@ def read_swine(file_name, max_lines=False):
         current_line += 1
 
     print(f"Reading Complete")
-    print(f"Length of PIG_data:{len(pig_data)}")
+    print(f"Lines of PIG_data:{len(pig_data)}")
     print(f"Enough for {round((len(pig_data) / 51), 1)} sausage sequences")
     print(f"Skipped lines: {skipped_line}")
 
