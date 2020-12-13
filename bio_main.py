@@ -1,6 +1,7 @@
 import time
 from read_sausage import *
 from genome_split import *
+from organize_sausage import *
 
 if __name__ == '__main__':
     print("Hello world")
@@ -9,7 +10,9 @@ if __name__ == '__main__':
     # get sausage data, divide in windows with length 51
     sausage_data = read_sausage('SausageTest.fasta', sausage_length)
 
-    genome_split('pig_1.fasta', 10)
+    # genome_split('pig_1.fasta', 10)
+
+    organize_sausage(sausage_data)
 
     # open big file
     count_valid = 0
@@ -85,16 +88,17 @@ if __name__ == '__main__':
                     previous_sequence = genome_sequence
 
                     # ANALYSIS
+                    # TODO Optimize this, compare only sequences with the same first nucleotide!
                     # if a valid genome sequence is found, every sausage sequence is compared to it
-                    # for i in range(0, len(sausage_data)):
-                    if sausage_data[0] == genome_sequence:
+                    # for i in range(0, len(sausage_data)): # this compares every sequence
+                    if sausage_data[0] == genome_sequence:  # only first
                         hits += 1
                         print(f"Found {hits}!")
                     checked += 1
-            if checked % 10 ** 6 == 0:
+            if checked % (10 ** 5) == 0:
                 print("Genome Sequences Compared:", checked)
-                # break
+                break
 
     print("Valid Genome Sequences Found:", count_valid)
-    print("Hits:", hits)
-    print("--- %s seconds ---" % (time.time() - start_time))
+    print("Matches:", hits)
+    print(f"Searching took", round((time.time() - start_time), 2), "seconds")

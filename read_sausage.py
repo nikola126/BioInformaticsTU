@@ -2,10 +2,13 @@ import time
 
 
 def read_sausage(filename, sequence_length):
+    start_time = time.time()
+
     sausage_data = []
     read_sequences = 0
     valid_sequences = 0
     # load a line of sausage data in memory
+    print(f"Reading from {filename}...")
     for line in open(filename, 'r').readlines():
         line = line.strip('\n')
 
@@ -29,6 +32,8 @@ def read_sausage(filename, sequence_length):
     invalid_percentage = round((read_sequences / valid_sequences) / 100, 2)
     print("Invalid Sequences:", read_sequences - valid_sequences, f"({invalid_percentage} %)")
     print("Example Sequence:", sausage_data[0])
+
+    print(f"Data from {filename} was read in", round((time.time() - start_time), 2), "seconds")
     print("-----" * 10)
     return sausage_data
 
