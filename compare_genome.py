@@ -115,9 +115,9 @@ def compare_genome(gen_filename, sausage_data, A_seq, G_seq, C_seq, T_seq, seque
 
                     checked += 1
             # Progress Report
-            if checked % (10 ** 6) == 0:
-                print("Genome Sequences Compared:", checked)
-                # Break here to stop earlier
+            # if checked % (10 ** 0) == 0:
+            #     print("Genome Sequences Compared:", checked)
+            #     # Break here to stop earlier
 
     # Print Stats
     print("Valid Genome Sequences Found:", count_valid)

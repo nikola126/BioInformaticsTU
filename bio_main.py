@@ -17,4 +17,16 @@ if __name__ == '__main__':
 
     A_seq, G_seq, C_seq, T_seq = organize_sausage(sausage_data)
 
-    compare_genome('genome_split_1.txt', sausage_data, A_seq, G_seq, C_seq, T_seq, sausage_length)
+    print("Enter Genome File Name")
+    print("Example: genome_split_8.txt")
+    genome_filename = input(">>>")
+
+    try:
+        test = open(genome_filename, 'r')
+    except FileNotFoundError:
+        input("File Not Found. Press Enter.\n")
+    else:
+        test.close()
+        compare_genome(genome_filename, sausage_data, A_seq, G_seq, C_seq, T_seq, sausage_length)
+
+
