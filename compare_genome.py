@@ -111,10 +111,11 @@ def compare_genome(gen_filename, sausage_data, A_seq, G_seq, C_seq, T_seq, seque
                         # dotuk dano ne se stiga (pray)
                         print(genome_sequence, "is not a valid sequence.")
                         print("Check reading in compare_genome.py")
+                        EOF_reached = True
 
                     checked += 1
             # Progress Report
-            if checked % (10 ** 3) == 0:
+            if checked % (10 ** 6) == 0:
                 print("Genome Sequences Compared:", checked)
                 # Break here to stop earlier
 
