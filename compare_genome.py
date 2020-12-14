@@ -4,8 +4,7 @@ from datetime import datetime
 
 def compare_genome(gen_filename, sausage_data, A_seq, G_seq, C_seq, T_seq, sequence_length):
     # Get data for summary later
-    now = datetime.now()
-
+    search_start_time = datetime.now()
 
     count_valid = 0
     matches = 0
@@ -114,9 +113,10 @@ def compare_genome(gen_filename, sausage_data, A_seq, G_seq, C_seq, T_seq, seque
                         print("Check reading in compare_genome.py")
 
                     checked += 1
-            if checked % (10 ** 6) == 0:
+            # Progress Report
+            if checked % (10 ** 3) == 0:
                 print("Genome Sequences Compared:", checked)
-                # break  # Enable this, to stop earlier
+                # Break here to stop earlier
 
     # Print Stats
     print("Valid Genome Sequences Found:", count_valid)
@@ -124,9 +124,16 @@ def compare_genome(gen_filename, sausage_data, A_seq, G_seq, C_seq, T_seq, seque
     print(f"Searching took", round((time.time() - start_time), 2), "seconds")
 
     # Save to File
-    # with open('Summary.txt','w') as summary:
-    #     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-    #     print("date and time =", dt_string)
+    with open('Summary.txt', 'w') as summary:
+        search_end_time = datetime.now()
+        dt_start = search_start_time.strftime("%d/%m/%Y %H:%M:%S")
+        dt_end = search_end_time.strftime("%d/%m/%Y %H:%M:%S")
+
+        summary.write(f"Genome Data File: {gen_filename}\n")
+        summary.write(f"Search Start: {dt_start}\n")
+        summary.write(f"Search End:   {dt_end}\n")
+        summary.write(f"Valid Genome Sequences Found and Compared: {count_valid}\n")
+        summary.write(f"Matches Found: {matches}\n")
 
 
 if __name__ == "__main__":
