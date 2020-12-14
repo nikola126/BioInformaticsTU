@@ -1,7 +1,7 @@
 import time
 
 
-def genome_split(genome_filename, parts):
+def split_genome(genome_filename, parts):
     """
     Splits a genome file in several parts
     TODO A few windows are lost when cutting. Need to add overlap between the different sub-files
@@ -48,6 +48,7 @@ def genome_split(genome_filename, parts):
         lines += 1
 
     print("Data Split Complete -> %s seconds" % round((time.time() - start_time), 2))
+    print("-----" * 10)
 
 
 if __name__ == "__main__":
@@ -55,5 +56,5 @@ if __name__ == "__main__":
     genome_filename = input("Enter name of genome FASTA file:")
     parts = input("Enter number of parts:")
     parts = int(parts)
-    genome_split(genome_filename, parts)
+    split_genome(genome_filename, parts)
 

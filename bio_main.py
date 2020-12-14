@@ -1,104 +1,20 @@
 import time
 from read_sausage import *
-from genome_split import *
+from split_genome import *
 from organize_sausage import *
+from compare_genome import *
 
 if __name__ == '__main__':
     print("Hello world")
+
     sausage_length = 51
 
     # get sausage data, divide in windows with length 51
     sausage_data = read_sausage('SausageTest.fasta', sausage_length)
 
-    # genome_split('pig_1.fasta', 10)
+    # split Genome data in multiple files
+    # split_genome('pig_1.fasta', 20)
 
-    organize_sausage(sausage_data)
+    A_seq, G_seq, C_seq, T_seq = organize_sausage(sausage_data)
 
-    # open big file
-    count_valid = 0
-    sausage_length = 51
-    hits = 0
-    previous_sequence = ''
-    gen_filename = 'genome_split_1.txt'
-    checked = 0
-
-    start_time = time.time()
-
-    with open(gen_filename, 'r') as gen_file:
-        print(f"Reading Through {gen_filename}...")
-        # skip first line
-        gen_file.readline()
-        # get initial read pointer position TODO Fix this
-        offset = gen_file.tell()
-        EOF_reached = False
-        while not EOF_reached:
-            # print("Offset before reading next:",gen_file.tell())
-            # read 51 characters
-            genome_sequence = ''
-            valid = True
-            chars_read = 0
-            over_new_line = False
-            while len(genome_sequence) != sausage_length and valid:
-                char = gen_file.read(1)
-                # print(char, end= '')
-                chars_read += 1
-                # check for end of file
-                if char == '':
-                    print('EOF reached')
-                    EOF_reached = True
-                    valid = False
-                    break
-                # skip the new line character
-                if char == '\n':
-                    # print("New line")
-                    over_new_line = True
-                    continue
-                # check for invalid characters
-                if char not in ['A', 'T', 'G', 'C']:
-                    # read forward and start over
-                    offset = gen_file.tell()
-                    # gen_file.read(skip_forward)
-                    valid = False
-                else:
-                    genome_sequence += char
-            if valid:
-                count_valid += 1
-                # print("Sequence:", genome_sequence)
-                # print("Offset after reading:", gen_file.tell())
-
-                # TODO SOURCE OF BUGS
-                # Check for End of File
-                next_char = gen_file.read(1)
-                if next_char == '':
-                    print("EOF reached")
-                    EOF_reached = True
-                else:
-                    if over_new_line:
-                        pass
-                    offset += 1
-                    gen_file.seek(offset)
-
-                # TODO SOME SEQUENCES ARE READ TWICE, FIX THIS
-                if genome_sequence == previous_sequence:
-                    # print("Duplicate", genome_sequence)
-                    count_valid -= 1
-                    # previous_sequence = genome_sequence
-                else:
-                    # print("OK Sequence:", genome_sequence)
-                    previous_sequence = genome_sequence
-
-                    # ANALYSIS
-                    # TODO Optimize this, compare only sequences with the same first nucleotide!
-                    # if a valid genome sequence is found, every sausage sequence is compared to it
-                    # for i in range(0, len(sausage_data)): # this compares every sequence
-                    if sausage_data[0] == genome_sequence:  # only first
-                        hits += 1
-                        print(f"Found {hits}!")
-                    checked += 1
-            if checked % (10 ** 5) == 0:
-                print("Genome Sequences Compared:", checked)
-                break
-
-    print("Valid Genome Sequences Found:", count_valid)
-    print("Matches:", hits)
-    print(f"Searching took", round((time.time() - start_time), 2), "seconds")
+    compare_genome('genome_split_1.txt', sausage_data, A_seq, G_seq, C_seq, T_seq, sausage_length)
