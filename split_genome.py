@@ -6,6 +6,16 @@ def split_genome(genome_filename, parts):
     Splits a genome file in several parts
     TODO A few windows are lost when cutting. Need to add overlap between the different sub-files
     """
+
+    # Check if file is available
+    try:
+        test = open(genome_filename, 'r')
+    except FileNotFoundError:
+        print(f"Can't open {genome_filename}!")
+        input("Press any key to continue")
+    else:
+        test.close()
+
     lines = 0
     header_line = ''
     genome_file = open(genome_filename, 'r')
@@ -30,7 +40,7 @@ def split_genome(genome_filename, parts):
 
     lines = 1
     sub_count = 1
-    sub_file_name = 'genome_split_1.txt'
+    sub_file_name = "genome_split_{}_{}.txt".format(sub_count, parts)
     # Open first file
     sub_file = open(sub_file_name, 'w')
     print("Genome data will start in this file ->", sub_file_name)
@@ -42,7 +52,7 @@ def split_genome(genome_filename, parts):
             sub_file.close()
             # change file name
             sub_count += 1
-            sub_file_name = "genome_split_%s.txt" % sub_count
+            sub_file_name = "genome_split_{}_{}.txt".format(sub_count, parts)
             # open new file
             sub_file = open(sub_file_name, 'w')
         lines += 1
@@ -53,8 +63,7 @@ def split_genome(genome_filename, parts):
 
 if __name__ == "__main__":
     print("Genome Split")
-    genome_filename = input("Enter name of genome FASTA file:")
-    parts = input("Enter number of parts:")
+    genome_filename = input("Enter name of genome FASTA file: ")
+    parts = input("Enter number of parts: ")
     parts = int(parts)
     split_genome(genome_filename, parts)
-

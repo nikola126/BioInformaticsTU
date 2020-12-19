@@ -2,6 +2,15 @@ import time
 
 
 def read_sausage(filename, sequence_length):
+    # Check if file is available
+    try:
+        test = open(filename, 'r')
+    except FileNotFoundError:
+        print(f"Can't open {filename}!")
+        input("Press any key to continue")
+    else:
+        test.close()
+
     start_time = time.time()
 
     sausage_data = []
@@ -40,9 +49,4 @@ def read_sausage(filename, sequence_length):
 
 if __name__ == "__main__":
     print("Reading Sausage Data")
-    sausage_filename = input("Enter name of Sausage FASTA file:")
-    sequence_length = input("Enter sausage sequence length:")
-    sequence_length = int(sequence_length)
-    read_sausage(sausage_filename, sequence_length)
-
     print("This function returns an array of Sausage data. Call this function inside another script!")
