@@ -22,7 +22,15 @@ if __name__ == '__main__':
     sausage_data = read_sausage('SausageTest.fasta', sausage_length)
 
     # split Genome data in multiple files
-    # split_genome('pig_1.fasta', 100)
+    user_split_choice = input("Would you like to split the big genome file in multiple smaller files? [y/n] >>> ")
+    user_parts = ' '
+    if user_split_choice in ['yes', 'YES', 'y']:
+        while not user_parts.isdigit():
+            user_parts = input("Enter number of parts: ")
+        else:
+            split_genome('pig_1.fasta', user_parts)
+    else:
+        pass
 
     A_seq, G_seq, C_seq, T_seq = organize_sausage(sausage_data)
 

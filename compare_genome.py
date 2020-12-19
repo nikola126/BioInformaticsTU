@@ -3,15 +3,41 @@ from datetime import datetime
 
 
 def compare_genome(gen_filename, A_seq, G_seq, C_seq, T_seq, sequence_length):
+
+    # check for available recovery file
+    try:
+        recovery = open('Recovery.txt', 'r')
+    except FileNotFoundError:
+        print("Recovery file not found. Starting from beginning.")
+        rec_matches = 0
+        rec_pointer_pos = 0
+        rec_checked = 0
+    else:
+        # get last file pointer position
+        line = recovery.readline()
+        line = line.strip('\n')
+        line = line.split('|')
+        print(line)
+        rec_matches = int(line[0][8:])
+        rec_pointer_pos = int(line[1][17:])
+        rec_checked = int(line[2][18:])
+        print("Recovery file found. Continuing search...")
+        print("Matches:", rec_matches)
+        print("Pointer position:", rec_pointer_pos)
+        print("Sequences checked:", rec_checked)
+        # print("End")
+        # return
+
+    # create recovery file
+    recovery = open('Recovery.txt', 'w')
+
     # Get data for summary later
     search_start_time = datetime.now()
 
-    count_valid = 0
-    matches = 0
+    count_valid = rec_checked
+    matches = rec_matches
     previous_sequence = ''
-    checked = 0
-
-    start_time = time.time()
+    checked = rec_checked
 
     with open(gen_filename, 'r') as gen_file:
         print(f"Reading Through {gen_filename}...")
@@ -26,7 +52,7 @@ def compare_genome(gen_filename, A_seq, G_seq, C_seq, T_seq, sequence_length):
             gen_file.seek(0)
 
         # get initial read pointer position
-        offset = gen_file.tell()
+        offset = gen_file.tell() + rec_pointer_pos
         EOF_reached = False
         while not EOF_reached:
             # read 51 characters
@@ -98,10 +124,18 @@ def compare_genome(gen_filename, A_seq, G_seq, C_seq, T_seq, sequence_length):
                         EOF_reached = True
 
                     checked += 1
-            # Progress Report
-            # if checked % (10 ** 0) == 0:
-            #     print("Genome Sequences Compared:", checked)
-            #     # Break here to stop earlier
+            # Periodically save recovery information
+            if checked % (10 ** 4) == 0:
+                print("Genome Sequences Compared:", count_valid)
+                recovery.seek(0)
+                recovery.write(f'Matches:{matches}|Pointer position:{offset}|Sequences checked:{count_valid}\n')
+                # Break here to stop earlier
+            # if matches:
+            #     print("Match found. Test recovery")
+            #     break
+
+    # After EOF
+    recovery.close()
 
     # Print Stats
     # print("Valid Genome Sequences Found:", count_valid)
