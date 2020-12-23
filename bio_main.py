@@ -31,8 +31,8 @@ if __name__ == '__main__':
 
     # Open and Split Genome File
     print(
-        "Would you like to split a big genome file (from the database, not necessarily a split) in multiple smaller "
-        "files? [y/n]")
+        "Would you like to split a big genome file (from the database, not necessarily a split)\n"
+        "in multiple smaller files? [y/n]")
     user_split_choice = input(">>> ")
     user_parts = ' '
     if user_split_choice in ['yes', 'YES', 'y']:

@@ -3,8 +3,16 @@ from datetime import datetime
 
 def compare_genome(gen_filename, A_seq, G_seq, C_seq, T_seq, sequence_length):
     # check for available recovery file
-    rec_file_name = 'Recovery.txt'
-    recovery_save_interval = 250000  # after this many checked windows, the recovery file is updated
+    # isolate file extension
+    source_name = []
+    for char in gen_filename:
+        if char == '.':
+            break
+        source_name.append(char)
+    rec_file_name = ''.join(source_name)
+    rec_file_name = f'Recovery_{rec_file_name}.txt'
+
+    recovery_save_interval = 100000  # after this many checked windows, the recovery file is updated
 
     try:
         recovery = open(rec_file_name, 'r')
@@ -24,7 +32,7 @@ def compare_genome(gen_filename, A_seq, G_seq, C_seq, T_seq, sequence_length):
             line = recovery.readline()
             line = line.strip('\n')
             line = line.split('|')
-            if len(line) == 4:
+            if len(line) == 5:
                 # update values
                 rec_matches = int(line[0])
                 rec_pointer_pos = int(line[1])
@@ -40,7 +48,7 @@ def compare_genome(gen_filename, A_seq, G_seq, C_seq, T_seq, sequence_length):
             print("Sequences checked:", rec_checked)
 
     # create recovery file
-    recovery = open(rec_file_name, 'w')
+    recovery = open(rec_file_name, 'a')
 
     # Get data for summary later
     search_start_time = datetime.now()
@@ -49,6 +57,13 @@ def compare_genome(gen_filename, A_seq, G_seq, C_seq, T_seq, sequence_length):
     matches = rec_matches
     previous_sequence = ''
     checked = rec_checked
+
+    # Show/Hide progress report
+    show_progress_report = False
+    print("Show progress while working? [y/n]")
+    user_progress_choice = input(">>> ")
+    if user_progress_choice in ['y', 'yes', 'YES']:
+        show_progress_report = True
 
     with open(gen_filename, 'r') as gen_file:
         print(f"Progress is saved at every {recovery_save_interval} windows.")
@@ -139,7 +154,12 @@ def compare_genome(gen_filename, A_seq, G_seq, C_seq, T_seq, sequence_length):
             # Periodically save recovery information every few thousand checked windows
             if checked % recovery_save_interval == 0:
                 # print("Genome Sequences Compared:", count_valid)
-                recovery.write(f'{matches}|{offset}|{count_valid}|OK\n')
+                recovery_time_data = datetime.now()
+                recovery_time_string = recovery_time_data.strftime("%H:%M:%S")
+                recovery.write(f'{matches}|{offset}|{count_valid}|{recovery_time_string}|OK\n')
+
+                if show_progress_report:
+                    print(f'Matches Found: {matches} | Genome Sequences Compared: {count_valid} | {recovery_time_string}')
                 # Break here to stop earlier
 
     # After EOF
@@ -158,9 +178,6 @@ def compare_genome(gen_filename, A_seq, G_seq, C_seq, T_seq, sequence_length):
 
     # Save Summary to File
     with open('Summary.txt', 'w') as summary:
-        search_end_time = datetime.now()
-        dt_start = search_start_time.strftime("%d/%m/%Y %H:%M:%S")
-        dt_end = search_end_time.strftime("%d/%m/%Y %H:%M:%S")
 
         summary.write(f"Genome Data File: {gen_filename}\n")
         summary.write(f"Search Start: {dt_start}\n")
