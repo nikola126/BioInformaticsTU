@@ -11,6 +11,8 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
         source_name.append(char)
     rec_file_name = ''.join(source_name)
     rec_file_name = f'Recovery_{rec_file_name}.txt'
+    summary_file_name = ''.join(source_name)
+    summary_file_name = f'Summary_{summary_file_name}.txt'
 
     recovery_save_interval = 100000  # after this many checked windows, the recovery file is updated
 
@@ -172,7 +174,7 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
     print(f"Matches Found: {matches}")
 
     # Save Summary to File
-    with open('Summary.txt', 'w') as summary:
+    with open(summary_file_name, 'w') as summary:
 
         summary.write(f"Genome Data File: {gen_filename}\n")
         summary.write(f"Search Start: {dt_start}\n")
