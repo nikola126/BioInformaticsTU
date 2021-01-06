@@ -27,7 +27,7 @@ if __name__ == '__main__':
     # get sausage data, divide in windows with length 51
     sausage_length = 51
     sausage_data = read_sausage('SausageTest.fasta', sausage_length)
-    A_seq, G_seq, C_seq, T_seq = organize_sausage(sausage_data)
+    A_set, G_set, C_set, T_set = organize_sausage(sausage_data)
 
     # Open and Split Genome File
     print(
@@ -71,4 +71,4 @@ if __name__ == '__main__':
         input("Press any key to continue")
     else:
         test.close()
-        compare_genome(user_split_filename, A_seq, G_seq, C_seq, T_seq, sausage_length)
+        compare_genome(user_split_filename, A_set, G_set, C_set, T_set, sausage_length)

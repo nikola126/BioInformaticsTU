@@ -1,7 +1,7 @@
 from datetime import datetime
 
 
-def compare_genome(gen_filename, A_seq, G_seq, C_seq, T_seq, sequence_length):
+def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
     # check for available recovery file
     # isolate file extension
     source_name = []
@@ -129,23 +129,18 @@ def compare_genome(gen_filename, A_seq, G_seq, C_seq, T_seq, sequence_length):
                     # ANALYSIS
                     # get first char
                     if genome_sequence[0] == 'A':
-                        for sequence in A_seq:
-                            if sequence == genome_sequence:
-                                matches += 1
+                        if genome_sequence in A_set:
+                            matches += 1
                     elif genome_sequence[0] == 'G':
-                        for sequence in G_seq:
-                            if sequence == genome_sequence:
-                                matches += 1
+                        if genome_sequence in G_set:
+                            matches += 1
                     elif genome_sequence[0] == 'C':
-                        for sequence in C_seq:
-                            if sequence == genome_sequence:
-                                matches += 1
+                        if genome_sequence in C_set:
+                            matches += 1
                     elif genome_sequence[0] == 'T':
-                        for sequence in T_seq:
-                            if sequence == genome_sequence:
-                                matches += 1
+                        if genome_sequence in T_set:
+                            matches += 1
                     else:
-                        # dotuk dano ne se stiga 🙏
                         print(genome_sequence, "is not a valid sequence.")
                         print("Check reading in compare_genome.py")
                         pass
