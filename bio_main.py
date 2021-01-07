@@ -26,7 +26,7 @@ if __name__ == '__main__':
     # Split Sausage File to Sequences
     # get sausage data, divide in windows with length 51
     sausage_length = 51
-    sausage_data = read_sausage('SausageTest.fasta', sausage_length)
+    sausage_data = read_sausage(user_sausage_filename, sausage_length)
     A_set, G_set, C_set, T_set = organize_sausage(sausage_data)
 
     # Open and Split Genome File
