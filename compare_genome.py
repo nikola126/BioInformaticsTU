@@ -88,6 +88,9 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
         offset = gen_file.tell() + rec_pointer_pos
         EOF_reached = False
         while not EOF_reached:
+            # break earlier if all sequences are found
+            if len(A_set) == 0 and len(G_set) == 0 and len(C_set) == 0 and len(T_set) == 0:
+                break
             # read 51 characters
             genome_sequence = ''
             valid = True
@@ -135,15 +138,19 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
                     if genome_sequence[0] == 'A':
                         if genome_sequence in A_set:
                             matches += 1
+                            A_set.remove(genome_sequence)
                     elif genome_sequence[0] == 'G':
                         if genome_sequence in G_set:
                             matches += 1
+                            G_set.remove(genome_sequence)
                     elif genome_sequence[0] == 'C':
                         if genome_sequence in C_set:
                             matches += 1
+                            C_set.remove(genome_sequence)
                     elif genome_sequence[0] == 'T':
                         if genome_sequence in T_set:
                             matches += 1
+                            T_set.remove(genome_sequence)
                     else:
                         print(genome_sequence, "is not a valid sequence.")
                         print("Check reading in compare_genome.py")
@@ -172,7 +179,7 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
     print(f"Genome Data File: {gen_filename}")
     print(f"Search Start: {dt_start}")
     print(f"Search End:   {dt_end}")
-    print(f"Valid Genome Sequences Found and Compared: {count_valid}")
+    print(f"Valid Genome Sequences Found: {count_valid}")
     print(f"Matches Found: {matches}")
 
     # Save Summary to File
@@ -180,7 +187,7 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
         summary.write(f"Genome Data File: {gen_filename}\n")
         summary.write(f"Search Start: {dt_start}\n")
         summary.write(f"Search End:   {dt_end}\n")
-        summary.write(f"Valid Genome Sequences Found and Compared: {count_valid}\n")
+        summary.write(f"Valid Genome Sequences Found: {count_valid}\n")
         summary.write(f"Matches Found: {matches}\n")
 
 
