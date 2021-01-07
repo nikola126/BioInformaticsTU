@@ -11,10 +11,8 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
             break
         source_name.append(char)
     file_name_no_extension = ''.join(source_name)
-    rec_file_name = ''.join(source_name)
-    rec_file_name = f'Recovery_{rec_file_name}.txt'
-    summary_file_name = ''.join(source_name)
-    summary_file_name = f'Summary_{summary_file_name}.txt'
+    rec_file_name = f'Recovery_{file_name_no_extension}.txt'
+    summary_file_name = f'Summary_{file_name_no_extension}.txt'
 
     recovery_save_interval = 150000  # after this many checked windows, the recovery file is updated
 
@@ -116,7 +114,7 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
         print("Sequences checked:", rec_checked)
         # print("Pointer position:", rec_pointer_pos)
 
-    # Get data for summary later
+    # Get start time for summary later
     search_start_time = datetime.now()
 
     count_valid = rec_checked
@@ -137,6 +135,7 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
         print(f"Reading {gen_filename}...")
 
         # check if first line is header line or contains genetic information
+        # this is done only if recovery failed (or first time checking a file)
         if set_recovery_file_missing:
             first_line = gen_file.readline()
             if first_line[0] == '>':
@@ -181,7 +180,6 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
                 else:
                     genome_sequence += char
             if valid:
-
                 # TODO SOME SEQUENCES ARE READ TWICE
                 # SEEK GOES TOO FAR BACK, WHICH LEADS TO DUPLICATES
                 # Check for End of File
@@ -200,11 +198,10 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
                     count_valid += 1
 
                     # ANALYSIS
-                    # print("Now checking:", genome_sequence, gen_file.tell())
-                    # print("Pointer position:", offset)
                     # get first char
                     if genome_sequence[0] == 'A':
                         if genome_sequence in A_set:
+                            # if a match is found, remove the sequence from the set, so it can't be "found" again
                             matches += 1
                             A_set.remove(genome_sequence)
                     elif genome_sequence[0] == 'G':
@@ -258,7 +255,6 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
                 # Break here to stop earlier
 
     # After EOF
-
     # Print Summary to Console Output
     search_end_time = datetime.now()
     dt_start = search_start_time.strftime("%d/%m/%Y %H:%M:%S")
