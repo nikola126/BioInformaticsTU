@@ -44,6 +44,10 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
 
         if rec_matches == 0 and rec_pointer_pos == 0 and rec_checked == 0:
             print("Recovery file empty or corrupted. Starting from beginning.")
+            # empty file contents
+            recovery.close()
+            recovery = open(rec_file_name, 'w')
+            recovery.close()
         else:
             print("Recovery file found.")
             print("Matches:", rec_matches)
