@@ -48,9 +48,7 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
             print("Recovery file found.")
             print("Matches:", rec_matches)
             print("Sequences checked:", rec_checked)
-
-    # create recovery file
-    recovery = open(rec_file_name, 'a')
+            recovery.close()
 
     # Get data for summary later
     search_start_time = datetime.now()
@@ -150,17 +148,17 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
                     checked += 1
             # Periodically save recovery information every few thousand checked windows
             if checked % recovery_save_interval == 0:
-                # print("Genome Sequences Compared:", count_valid)
                 recovery_time_data = datetime.now()
                 recovery_time_string = recovery_time_data.strftime("%H:%M:%S")
-                recovery.write(f'{matches}|{offset}|{count_valid}|{recovery_time_string}|OK\n')
+                with open(rec_file_name, 'a') as recovery:
+                    recovery.write(f'{matches}|{offset}|{count_valid}|{recovery_time_string}|OK\n')
 
                 if show_progress_report:
-                    print(f'Matches Found: {matches} | Genome Sequences Compared: {count_valid} | {recovery_time_string}')
+                    print(
+                        f'Matches Found: {matches} | Genome Sequences Compared: {count_valid} | {recovery_time_string}')
                 # Break here to stop earlier
 
     # After EOF
-    recovery.close()
 
     # Print Summary to Console Output
     search_end_time = datetime.now()
@@ -175,7 +173,6 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
 
     # Save Summary to File
     with open(summary_file_name, 'w') as summary:
-
         summary.write(f"Genome Data File: {gen_filename}\n")
         summary.write(f"Search Start: {dt_start}\n")
         summary.write(f"Search End:   {dt_end}\n")
