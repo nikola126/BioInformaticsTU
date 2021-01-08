@@ -10,7 +10,7 @@
 |свински (Sus Scrofa) chr 3|553|
 |пилешки (Gallus Gallus) chr 1|6
 |агнешки (Ovis Aries) chr 1|12093
-|конски (Equus caballus) chr 1| 
+|конски (Equus caballus) chr 1|105 
 
 ## Задача
 * Да се вземе геномен файл оттук: https://www.ncbi.nlm.nih.gov/genome/?term=swine
