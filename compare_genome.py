@@ -14,7 +14,7 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
     rec_file_name = f'Recovery_{file_name_no_extension}.txt'
     summary_file_name = f'Summary_{file_name_no_extension}.txt'
 
-    recovery_save_interval = 150000  # after this many checked windows, the recovery file is updated
+    recovery_save_interval = 2000000  # after this many checked windows, the recovery file is updated
 
     # Open recovery file for pointer position and matches information
     try:
