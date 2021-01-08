@@ -3,13 +3,17 @@
 Започнат на 10/12/2020
 
 ## Резултати
-|геном|свински (Sus scrofa)|пилешки (Gallus gallus)|агнешки (Ovus Aries)
-|-|-|-|-|
-|съвпадения||||
+|геном|съвпадения|
+|-|-|
+|свински (Sus Scrofa) chr 1|900|
+|свински (Sus Scrofa) chr 2|559|
+|свински (Sus Scrofa) chr 3|553|
+|пилешки (Gallus Gallus) chr 1|6
+|агнешки (Ovis Aries) chr 1|12093
+|конски (Equus caballus) chr 1| 
 
 ## Задача
 * Да се вземе геномен файл оттук: https://www.ncbi.nlm.nih.gov/genome/?term=swine
-* Първият геномен файл в резултатите, разделен на 20 части може да се вземе оттук: https://drive.google.com/drive/folders/1N9I4Idl3Ya--JJobS5vTb_a-TQxTpDNs?usp=sharing
 * Да се прочетат в някакъв удобен вид
 * Да се видят поредиците от `SausageTest.fasta` колко често присъстват във всеки геномен файл
 
