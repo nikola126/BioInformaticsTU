@@ -9,6 +9,8 @@
 |свински (Sus Scrofa) chr 2|559|
 |свински (Sus Scrofa) chr 3|553|
 |пилешки (Gallus Gallus) chr 1|6
+|пилешки (Gallus Gallus) chr 2|8
+|пилешки (Gallus Gallus) chr 3|5
 |агнешки (Ovis Aries) chr 1|12093
 |конски (Equus caballus) chr 1|105 
 
