@@ -14,6 +14,7 @@
 |агнешки (Ovis Aries) chr 1|12093
 |конски (Equus caballus) chr 1|105 
 |плъх (Rattus Rattus) chr 1|18
+|говеждо (Bos Taurus) chr 1|8688
 
 ## Задача
 * Да се вземе геномен файл оттук: https://www.ncbi.nlm.nih.gov/genome/?term=swine
