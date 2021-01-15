@@ -12,9 +12,11 @@
 |пилешки (Gallus Gallus) chr 2|8
 |пилешки (Gallus Gallus) chr 3|5
 |агнешки (Ovis Aries) chr 1|12093
+|агнешки (Ovis Aries) chr 2|11426
 |конски (Equus caballus) chr 1|105 
 |плъх (Rattus Rattus) chr 1|18
 |говеждо (Bos Taurus) chr 1|8688
+|говеждо (Bos Taurus) chr 2|7977
 
 ## Задача
 * Да се вземе геномен файл оттук: https://www.ncbi.nlm.nih.gov/genome/?term=swine
