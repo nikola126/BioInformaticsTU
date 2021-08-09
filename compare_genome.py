@@ -160,7 +160,7 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
             genome_sequence = ''
             valid = True
             chars_read = 0
-            while len(genome_sequence) != sequence_length and valid:
+            while len(genome_sequence) < sequence_length and valid:
                 char = gen_file.read(1)
                 chars_read += 1
                 # check for end of file
@@ -180,6 +180,10 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
                 else:
                     genome_sequence += char
             if valid:
+                count_valid += 1
+                print(f"Valid {count_valid}\t{genome_sequence}")
+                if count_valid % 100 == 0:
+                    quit()
                 # TODO SOME SEQUENCES ARE READ TWICE
                 # SEEK GOES TOO FAR BACK, WHICH LEADS TO DUPLICATES
                 # Check for End of File
@@ -187,39 +191,49 @@ def compare_genome(gen_filename, A_set, G_set, C_set, T_set, sequence_length):
                 if next_char == '':
                     print("EOF reached")
                     EOF_reached = True
+                elif next_char == '\n' and offset != 0:
+                    print("Reading starts at a new line!")
+                    offset += 3
+                    gen_file.seek(offset)
                 else:
                     offset += 1
                     gen_file.seek(offset)
 
-                if genome_sequence == previous_sequence:
-                    count_valid -= 1
-                else:
-                    previous_sequence = genome_sequence
-                    count_valid += 1
+                # if genome_sequence == previous_sequence:
+                #     # print("DUPLICATE!")
+                #     # print(f"{genome_sequence}\n{previous_sequence}")
+                #     # quit()
+                #     count_valid -= 1
+                # else:
+                #     previous_sequence = genome_sequence
+                #     count_valid += 1
+                #     # print("valid sequence")
+                #     # print(f"{genome_sequence}\n{previous_sequence}")
+                count_valid += 1
 
-                    # ANALYSIS
-                    # get first char
-                    if genome_sequence[0] == 'A':
-                        if genome_sequence in A_set:
-                            # if a match is found, remove the sequence from the set, so it can't be "found" again
-                            matches += 1
-                            A_set.remove(genome_sequence)
-                    elif genome_sequence[0] == 'G':
-                        if genome_sequence in G_set:
-                            matches += 1
-                            G_set.remove(genome_sequence)
-                    elif genome_sequence[0] == 'C':
-                        if genome_sequence in C_set:
-                            matches += 1
-                            C_set.remove(genome_sequence)
-                    elif genome_sequence[0] == 'T':
-                        if genome_sequence in T_set:
-                            matches += 1
-                            T_set.remove(genome_sequence)
-                    else:
-                        print(genome_sequence, "is not a valid sequence.")
-                        print("Check reading in compare_genome.py")
-                        pass
+                # ANALYSIS
+                # get first char
+                if genome_sequence[0] == 'A':
+                    if genome_sequence in A_set:
+                        # if a match is found, remove the sequence from the set, so it can't be "found" again
+                        matches += 1
+                        A_set.remove(genome_sequence)
+                elif genome_sequence[0] == 'G':
+                    if genome_sequence in G_set:
+                        matches += 1
+                        G_set.remove(genome_sequence)
+                elif genome_sequence[0] == 'C':
+                    if genome_sequence in C_set:
+                        matches += 1
+                        C_set.remove(genome_sequence)
+                elif genome_sequence[0] == 'T':
+                    if genome_sequence in T_set:
+                        matches += 1
+                        T_set.remove(genome_sequence)
+                else:
+                    print(genome_sequence, "is not a valid sequence.")
+                    print("Check reading in compare_genome.py")
+                    pass
 
                     # checked += 1
                     # count_valid += 1

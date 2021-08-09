@@ -3,6 +3,7 @@ from read_sausage import *
 from split_genome import *
 from organize_sausage import *
 from compare_genome import *
+# from compare_new import *
 
 if __name__ == '__main__':
     print("Hello world")
@@ -71,4 +72,5 @@ if __name__ == '__main__':
         input("Press any key to continue")
     else:
         test.close()
-        compare_genome(user_split_filename, A_set, G_set, C_set, T_set, sausage_length)
+        # compare_genome(user_split_filename,A_set,G_set,C_set,T_set,10)
+        compare_genome(user_split_filename, A_set, G_set, C_set, T_set, 51)
