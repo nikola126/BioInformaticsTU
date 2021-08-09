@@ -1,12 +1,7 @@
-import time
-from read_sausage import *
-from split_genome import *
-from organize_sausage import *
-from compare_genome import *
-# from compare_new import *
+from sausage_func import *
+from genome_func import *
 
 if __name__ == '__main__':
-    print("Hello world")
     print("Bioinformatics 2020/2021")
 
     # Open Sausage File
@@ -25,17 +20,17 @@ if __name__ == '__main__':
         test.close()
 
     # Split Sausage File to Sequences
-    # get sausage data, divide in windows with length 51
-    sausage_length = 51
+    # get sausage data, divide in windows with user-defined length
+    sausage_length = int(input("Enter sequence length (51 for sausage data):\n>>> "))
     sausage_data = read_sausage(user_sausage_filename, sausage_length)
     A_set, G_set, C_set, T_set = organize_sausage(sausage_data)
 
     # Open and Split Genome File
     print(
-        "Would you like to split a big genome file (from the database, not necessarily a split)\n"
-        "in multiple smaller files? [y/n]")
+        "Would you like to split a big genome file (from the database, not necessarily a split) in multiple smaller "
+        "files? [y/n]")
     user_split_choice = input(">>> ")
-    user_parts = ' '
+    user_parts = ''
     if user_split_choice in ['yes', 'YES', 'y']:
         # get name of file
         print("Enter Genome File Name")
@@ -59,10 +54,14 @@ if __name__ == '__main__':
     else:
         pass
 
-    # Compare Sequences
+    # Open Genome File
     print("Enter Genome Split File Name")
     print("Example: genome_split_6_20.txt")
     user_split_filename = input(">>> ")
+
+    # Recovery Setup
+    print("How often to save recovery information? (default: 1 000 000)")
+    recovery_save_interval = int(input(">> "))
 
     # Check if file is available
     try:
@@ -72,5 +71,4 @@ if __name__ == '__main__':
         input("Press any key to continue")
     else:
         test.close()
-        # compare_genome(user_split_filename,A_set,G_set,C_set,T_set,10)
-        compare_genome(user_split_filename, A_set, G_set, C_set, T_set, 51)
+        compare_genome(user_split_filename, A_set, G_set, C_set, T_set, sausage_length, recovery_save_interval)
